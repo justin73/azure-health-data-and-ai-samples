@@ -26,13 +26,11 @@ jobs:
           npm install
           npm run build --if-present
           npm run test --if-present
-      - name: Zip artifact for deployment
-        run: zip release.zip ./samples/maira-prediction/image-to-findings-sample-app -r
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
         with:
-          name: node-app
-          path: release.zip
+          name: sample-app
+          path: samples/maira-prediction/image-to-findings-sample-app/build
 
   deploy:
     runs-on: ubuntu-latest
