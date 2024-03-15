@@ -26,11 +26,14 @@ jobs:
           npm install
           npm run build --if-present
           npm run test --if-present
+      - name: Zip build output
+        run: zip -r sample-app.zip samples/maira-prediction/image-to-findings-sample-app/build
+
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
         with:
           name: sample-app
-          path: samples/maira-prediction/image-to-findings-sample-app/build
+          path: sample-app.zip
 
   deploy:
     runs-on: ubuntu-latest
@@ -45,7 +48,7 @@ jobs:
       - name: Download artifact from build job
         uses: actions/download-artifact@v3
         with:
-          name: node-app
+          name: sample-app
 
       - name: Login to Azure
         uses: azure/login@v1
@@ -54,10 +57,10 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_73418A7E4D2A49319FB3FD5F0A75D73E }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_F183081C8B1A477693E58C549FB8B0B2 }}
 
-      - name: "Deploy to Azure Web App"
+      - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
         id: deploy-to-webapp
         with:
           app-name: "remix-azure-app"
           slot-name: "Production"
-          package: "release.zip"
+          package: "sample-app.zip"
