@@ -30,57 +30,57 @@ jobs:
           parameters: ./samples/maira-prediction/infra/github-image-sample-ui.bicepparam
           failOnStdErr: false
 
-  # build:
-  #   needs: infrastructure # This job depends on the infrastructure job
-  #   runs-on: ubuntu-latest
+  build:
+    needs: infrastructure # This job depends on the infrastructure job
+    runs-on: ubuntu-latest
 
-  #   steps:
-  #     - uses: actions/checkout@v4
+    steps:
+      - uses: actions/checkout@v4
 
-  #     - name: Set up Node.js version
-  #       uses: actions/setup-node@v3
-  #       with:
-  #         node-version: "18.x"
+      - name: Set up Node.js version
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18.x"
 
-  #     - name: npm install, build, and test
-  #       run: |
-  #         cd samples/maira-prediction/image-to-findings-sample-app-1/
-  #         npm install
-  #         npm run build --if-present
-  #         npm run test --if-present
+      - name: npm install, build, and test
+        run: |
+          cd samples/maira-prediction/image-to-findings-sample-app/
+          npm install
+          npm run build --if-present
+          npm run test --if-present
 
-  #     - name: Upload artifact for deployment job
-  #       uses: actions/upload-artifact@v3
-  #       with:
-  #         name: sample-app
-  #         path: ./samples/maira-prediction/image-to-findings-sample-app-1/build
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v3
+        with:
+          name: sample-app
+          path: ./samples/maira-prediction/image-to-findings-sample-app/build
 
-  # deploy:
-  #   runs-on: ubuntu-latest
-  #   needs: build
-  #   environment:
-  #     name: "Production"
-  #     url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-  #   permissions:
-  #     id-token: write #This is required for requesting the JWT
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: "Production"
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+    permissions:
+      id-token: write #This is required for requesting the JWT
 
-  #   steps:
-  #     - name: Download artifact from build job
-  #       uses: actions/download-artifact@v3
-  #       with:
-  #         name: sample-app
+    steps:
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v3
+        with:
+          name: sample-app
 
-  #     - name: Login to Azure
-  #       uses: azure/login@v1
-  #       with:
-  #         client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_D55C07A849724ACDA32CE31B1BE628E0 }}
-  #         tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_73418A7E4D2A49319FB3FD5F0A75D73E }}
-  #         subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_F183081C8B1A477693E58C549FB8B0B2 }}
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_D55C07A849724ACDA32CE31B1BE628E0 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_73418A7E4D2A49319FB3FD5F0A75D73E }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_F183081C8B1A477693E58C549FB8B0B2 }}
 
-  #     - name: Deploy to Azure Web App
-  #       uses: azure/webapps-deploy@v2
-  #       id: deploy-to-webapp
-  #       with:
-  #         app-name: "remix-azure-app"
-  #         slot-name: "Production"
-  #         package: .
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v2
+        id: deploy-to-webapp
+        with:
+          app-name: "remix-azure-app"
+          slot-name: "Production"
+          package: .
