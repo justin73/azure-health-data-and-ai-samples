@@ -23,7 +23,7 @@ jobs:
       - name: Deploy or update infrastructure
         uses: azure/arm-deploy@v1
         with:
-          scope: "resource group or subscription scope"
+          scope: "resourcegroup"
           subscriptionId: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_F183081C8B1A477693E58C549FB8B0B2 }} # If you have multiple subscriptions this will switch to the correct subscription for you
           resourceGroupName: ${{ vars.AZURE_SAMPLE_APP_RG }} # This doesn't have to be a variable, you could also hard code this, but ensure you create a variable if you use this approach
           template: ./samples/maira-prediction/infra/github-image-sample-ui.bicep # This is an assumed directory structure ensure you change to the correct directory as well as rename environment to uat or prod etc
