@@ -79,6 +79,6 @@ jobs:
         uses: azure/webapps-deploy@v2
         id: deploy-to-webapp
         with:
-          app-name: "remix-azure-app"
+          app-name: "image-to-findings-sample-app-1"
           slot-name: "Production"
           package: .
