@@ -66,7 +66,6 @@ resource staticSites_SampleDemo_name_resource 'Microsoft.Web/staticSites@2023-01
 resource staticSites_SampleDemo_name_default 'Microsoft.Web/staticSites/basicAuth@2023-01-01' = {
   parent: staticSites_SampleDemo_name_resource
   name: 'default'
-  location: 'global'
   properties: {
     applicableEnvironmentsMode: 'SpecifiedEnvironments'
   }
