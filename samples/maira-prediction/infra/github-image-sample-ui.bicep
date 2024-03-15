@@ -9,6 +9,7 @@ resource imageToFindingsSampleAppServicePlan 'Microsoft.Web/serverfarms@2022-09-
   location: location
   sku: {
     name: appSKU
+    tier: appSKU
   }
   properties: {
     reserved: true

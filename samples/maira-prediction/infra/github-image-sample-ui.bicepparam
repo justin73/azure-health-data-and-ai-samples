@@ -1,5 +1,5 @@
 using 'github-image-sample-ui.bicep'
-param location = 'eastus'
+param location = 'eastus2'
 param appSKU = 'F1'
 param servicePlan = 'image-to-findings-sample-app-service-plan'
 param appName = 'image-to-findings-sample-app'
