@@ -18,9 +18,7 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v1
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_D55C07A849724ACDA32CE31B1BE628E0 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_73418A7E4D2A49319FB3FD5F0A75D73E }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_F183081C8B1A477693E58C549FB8B0B2}}
+          creds: ${{ secrets.AZURE_CREDENTIALS }} # This is the secret you created in the GitHub repository settings
 
       - name: Deploy or update infrastructure
         uses: azure/arm-deploy@v1
