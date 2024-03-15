@@ -37,13 +37,17 @@
 
 
 param staticSites_SampleDemo_name string = 'maira-demo-sample' // provide static site name
+param location string
+param appSKU string
+param servicePlan string
+param appName string
 
 resource staticSites_SampleDemo_name_resource 'Microsoft.Web/staticSites@2023-01-01' = {
   name: staticSites_SampleDemo_name
-  location: 'Central US' // change the deployment location based as needed
+  location: location // change the deployment location based as needed
   sku: {
-    name: 'Free'
-    tier: 'Free'
+    name: appSKU
+    tier: appSKU
   }
   properties: {
     repositoryToken:'' // provide PAT here
@@ -62,9 +66,8 @@ resource staticSites_SampleDemo_name_resource 'Microsoft.Web/staticSites@2023-01
 }
 
 resource staticSites_SampleDemo_name_default 'Microsoft.Web/staticSites/basicAuth@2023-01-01' = {
-  parent: staticSites_SampleDemo_name_resource
-  name: 'default'
-  location: 'Central US' // change the deployment location based as needed
+  name: servicePlan
+  location: location
   properties: {
     applicableEnvironmentsMode: 'SpecifiedEnvironments'
   }
