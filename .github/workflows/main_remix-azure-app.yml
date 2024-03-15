@@ -1,16 +1,16 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy Node.js app to Azure Web App - remix-azure-app
+name: Build and deploy Remix app to Azure Web App - remix-azure-app
 
 on:
   push:
     branches:
       - main
-  workflow_dispatch:
 
 jobs:
   build:
+    # needs: infrastructure # This job depends on the infrastructure job
     runs-on: ubuntu-latest
 
     steps:
@@ -20,20 +20,19 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: "18.x"
+
       - name: npm install, build, and test
         run: |
           cd samples/maira-prediction/image-to-findings-sample-app/
           npm install
           npm run build --if-present
           npm run test --if-present
-      - name: Zip build output
-        run: zip -r sample-app.zip samples/maira-prediction/image-to-findings-sample-app/build
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
         with:
           name: sample-app
-          path: sample-app.zip
+          path: ./samples/maira-prediction/image-to-findings-sample-app/build
 
   deploy:
     runs-on: ubuntu-latest
@@ -63,4 +62,4 @@ jobs:
         with:
           app-name: "remix-azure-app"
           slot-name: "Production"
-          package: "sample-app.zip"
+          package: .
