@@ -1,8 +1,8 @@
 {
+  "type": "module",
   "name": "image-to-findings-sample",
   "private": true,
   "sideEffects": false,
-  "type": "module",
   "scripts": {
     "build": "remix build",
     "dev": "remix dev --manual -c \"node --watch-path server.js --watch server.js\"",
