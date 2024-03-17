@@ -81,4 +81,4 @@ jobs:
         with:
           app-name: "image-to-findings-sample-app-1"
           slot-name: "Production"
-          package: "./samples/maira-prediction/image-to-findings-sample-app/build"
+          package: "."
