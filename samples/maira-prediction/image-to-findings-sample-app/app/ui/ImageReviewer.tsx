@@ -1,14 +1,19 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
+import { ModelInferenceType, ModelInferenceItem } from '@/app/page';
 
-export const ImageReviewer = ({ modelInference }) => {
+export const ImageReviewer = ({
+  modelInference,
+}: {
+  modelInference: ModelInferenceType;
+}) => {
   // Calculate the dimensions and position of the square
   const imageWidth = 500; // Example width of the image
   const imageHeight = 300; // Example height of the image
 
-  const [activeLabel, setActiveLabel] = useState(null); // State to track active label
+  const [activeLabel, setActiveLabel] = useState<string | null>(null); // State to track active label
 
-  const handleMouseEnter = (label) => {
+  const handleMouseEnter = (label: string) => {
     console.log('enter ---->', label);
     setActiveLabel(label);
   };
@@ -16,9 +21,6 @@ export const ImageReviewer = ({ modelInference }) => {
   const handleMouseLeave = () => {
     setActiveLabel(null);
     console.log('leave ---->');
-  };
-  const handleLabelHover = (label) => {
-    setActiveLabel(label);
   };
 
   return (
@@ -30,7 +32,7 @@ export const ImageReviewer = ({ modelInference }) => {
           width={imageWidth}
           height={imageHeight}
         />
-        {modelInference.map((item, index) => (
+        {modelInference.map((item: ModelInferenceItem, index: number) => (
           <div
             key={index}
             style={{
