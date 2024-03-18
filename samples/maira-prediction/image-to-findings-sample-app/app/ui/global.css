@@ -16,3 +16,26 @@ input[type='number']::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
+.image-container {
+  position: relative;
+}
+
+.square {
+  position: absolute;
+  border: 2px solid red; /* Example border color */
+  cursor: pointer; /* Change cursor to pointer */
+}
+
+.square.active {
+  background-color: white; /* Example background color for active state */
+}
+
+.list-item {
+  margin-bottom: 5px;
+  cursor: pointer; /* Change cursor to pointer */
+}
+
+.list-item.active {
+  font-weight: bold; /* Example font style for active state */
+}
