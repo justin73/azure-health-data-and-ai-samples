@@ -10,7 +10,6 @@ export type ModelInferenceItem = {
   x_min: number;
   y_max: number;
   y_min: number;
-  label: string;
 };
 
 export type ModelInferenceType = ModelInferenceItem[];

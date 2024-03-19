@@ -2,20 +2,33 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import { ModelInferenceType, ModelInferenceItem } from '@/app/page';
 
+type REAL_INFERENCES = {
+  boxes: ModelInferenceItem[];
+  text: string;
+};
+
+export type REPORT = {
+  imageId: string;
+  inference: {
+    result: REAL_INFERENCES[];
+  };
+  indication: string;
+};
+
 export const ImageReviewer = ({
-  modelInference,
+  report,
   onMouseEnter,
   onMouseLeave,
   activeLabel,
 }: {
-  modelInference: ModelInferenceType;
+  report: REPORT | null;
   onMouseEnter: (arg: string) => void;
   onMouseLeave: () => void;
   activeLabel: string | null;
 }) => {
   // Calculate the dimensions and position of the square
   const imageWidth = 500; // Example width of the image
-  const imageHeight = 300; // Example height of the image
+  const imageHeight = 500; // Example height of the image
 
   return (
     <>
@@ -26,22 +39,44 @@ export const ImageReviewer = ({
           width={imageWidth}
           height={imageHeight}
         />
-        {modelInference.map((item: ModelInferenceItem, index: number) => (
-          <div
-            key={index}
-            style={{
-              width: (item.x_max - item.x_min) * imageWidth,
-              height: (item.y_max - item.y_min) * imageHeight,
-              left: item.x_min * imageWidth,
-              top: item.y_min * imageHeight,
-            }}
-            onMouseEnter={() => onMouseEnter(item.label)}
-            onMouseLeave={onMouseLeave}
-            className={`square ${activeLabel === item.label ? 'active' : ''}`}
-          >
-            {item.label}
-          </div>
-        ))}
+        {report?.inference.result.map(
+          (item: REAL_INFERENCES, index: number) => {
+            console.log('item', item);
+            const { boxes, text } = item;
+            console.log('boxes', boxes);
+            const { x_max, x_min, y_max, y_min } = boxes[0];
+            return (
+              <div
+                key={index}
+                style={{
+                  left: `${x_min * 100}%`,
+                  top: `${y_min * 100}%`,
+                }}
+                onMouseEnter={() => onMouseEnter(text)}
+                onMouseLeave={onMouseLeave}
+                className={`absolute cursor-pointer ${activeLabel === text ? 'active' : ''}`}
+              >
+                <div
+                  className="rounded-md border border-gray-400
+                  bg-zinc-700
+                  p-1
+                  text-white "
+                >
+                  {index + 1}
+                </div>
+                {activeLabel === text && (
+                  <div
+                    className="square relative bg-transparent p-2 text-white"
+                    style={{
+                      width: (x_max - x_min) * imageWidth,
+                      height: (y_max - y_min) * imageHeight,
+                    }}
+                  />
+                )}
+              </div>
+            );
+          },
+        )}
       </div>
     </>
   );

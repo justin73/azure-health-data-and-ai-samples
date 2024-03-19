@@ -6,9 +6,9 @@ export const Footer = () => {
   const styles = useFooterStyles();
 
   return (
-    <div className="h-[10em] bg-gray-200 p-2 text-justify text-sm text-gray-900">
-      <div className="disclaimer-content">
-        <span className="bold-text">DISCLAIMER:</span> This demo showcases
+    <div className="h-[11em] bg-gray-200 p-4 text-justify text-sm text-gray-900">
+      <div className="w-90 mx-auto">
+        <span className="font-bold">DISCLAIMER:</span> This demo showcases
         several hypothetical products utilizing AI tools and technologies,
         including foundation models and large language models (such as Azure
         OpenAI GPT-4), in a clinical setting. These are not existing Microsoft
