@@ -1,6 +1,8 @@
 'use client';
-
+import { useState } from 'react';
+import { Button, Card } from '@fluentui/react-components';
 import { ImageReviewer } from '@/app/ui/ImageReviewer';
+import { usePageLayoutStyles } from '@/app/ui/payLayoutStyle';
 
 export type ModelInferenceItem = {
   x_max: number;
@@ -19,14 +21,56 @@ const modelInference: ModelInferenceItem[] = [
 ];
 
 export default function Page() {
+  const pageLayoutStyles = usePageLayoutStyles();
+
+  const [activeLabel, setActiveLabel] = useState<string | null>(null); // State to track active label
+  const [reports, setReports] = useState<ModelInferenceType>([]); // State to store the generated reports
+
+  const handleMouseEnter = (label: string) => {
+    console.log('enter ---->', label);
+    setActiveLabel(label);
+  };
+
+  const handleMouseLeave = () => {
+    setActiveLabel(null);
+    console.log('leave ---->');
+  };
+
+  const handleFetchData = () => {
+    setReports(modelInference);
+  };
+
   return (
-    <div className="flex min-h-screen flex-col bg-gray-100">
-      <h1>Samples Page</h1>
-      <div className="mt-4 flex grow flex-col gap-4 md:flex-row">
-        <div className="flex items-center justify-center p-6 md:w-3/5 md:px-28 md:py-12">
-          <ImageReviewer modelInference={modelInference} />
+    <Card className={pageLayoutStyles.card}>
+      <div className="flex flex-row">
+        <div className="flex flex-1 flex-col">
+          <h1>Generate Report</h1>
+          <div className="mt-4 flex grow flex-col gap-4 md:flex-row">
+            <ImageReviewer
+              modelInference={reports}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+              activeLabel={activeLabel}
+            />
+          </div>
+          <Button onClick={handleFetchData}>Click to generate report</Button>
+        </div>
+        <div className="flex-1">
+          Results
+          <ul>
+            {reports.map((item, index) => (
+              <li
+                key={index}
+                className={`list-item ${activeLabel === item.label ? 'active' : ''}`}
+                onMouseEnter={() => handleMouseEnter(item.label)}
+                onMouseLeave={handleMouseLeave}
+              >
+                <p>{item.label}</p>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
-    </div>
+    </Card>
   );
 }
