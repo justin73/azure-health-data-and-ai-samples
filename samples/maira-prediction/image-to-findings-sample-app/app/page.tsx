@@ -1,6 +1,9 @@
 'use client';
 
-import { ImageReviewer } from '@/app/ui/ImageReviewer';
+import Link from 'next/link';
+
+import { usePageLayoutStyles } from './ui/payLayoutStyle';
+import { Card } from '@fluentui/react-components';
 
 export type ModelInferenceItem = {
   x_max: number;
@@ -19,13 +22,39 @@ const modelInference: ModelInferenceItem[] = [
 ];
 
 export default function Page() {
+  const pageLayoutStyles = usePageLayoutStyles();
+
   return (
-    <main className="flex min-h-screen flex-col p-6">
-      <div className="mt-4 flex grow flex-col gap-4 md:flex-row">
-        <div className="flex items-center justify-center p-6 md:w-3/5 md:px-28 md:py-12">
-          <ImageReviewer modelInference={modelInference} />
+    <Card className={pageLayoutStyles.card}>
+      <div id="landing">
+        <div>
+          <div id="description">
+            <div id="title">Medical image report generation</div>
+            <div id="description-sub">
+              Generate a set of findings based on a medical image and an
+              indication. Users can select the finding and see a corresponding
+              overlay on the image highlighting the relevant anatomical region
+              or abnormality.
+            </div>
+          </div>
+          <div id="select-image">
+            <div>
+              <div className="draft-sub-title">Try it on your own image</div>
+              <div className="image-drop-box"></div>
+            </div>
+            <div className="landing-separator"></div>
+            <div id="image-gallery">
+              <div className="draft-sub-title">
+                Select an image from our gallery
+              </div>
+              <div id="image-gallery-content">
+                {/* <SampleImages /> */}
+                <Link href="/samples">Sample Image</Link>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </main>
+    </Card>
   );
 }
