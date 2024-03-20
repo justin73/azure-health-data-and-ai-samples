@@ -6,22 +6,6 @@ import { usePageLayoutStyles } from '@/app/ui/payLayoutStyle';
 import { RESPONSE_PAYLOAD } from '@/app/mockData/data';
 import { REPORT } from '@/app/ui/ImageReviewer';
 
-export type ModelInferenceItem = {
-  x_max: number;
-  x_min: number;
-  y_max: number;
-  y_min: number;
-  label: string;
-};
-
-export type ModelInferenceType = ModelInferenceItem[];
-
-const modelInference: ModelInferenceItem[] = [
-  { x_max: 0.905, x_min: 0.545, y_max: 0.905, y_min: 0.365, label: 'Item 1' },
-  { x_max: 0.745, x_min: 0.365, y_max: 0.665, y_min: 0.285, label: 'Item 2' },
-  // Add more items as needed
-];
-
 export default function Page() {
   const pageLayoutStyles = usePageLayoutStyles();
 
@@ -62,7 +46,7 @@ export default function Page() {
           <Button onClick={handleFetchData}>Click to generate report</Button>
         </div>
         <div className="flex-1">
-          Results
+          Predictions
           <ul>
             {report?.inference.result.map((item, index) => {
               return (
@@ -72,8 +56,8 @@ export default function Page() {
                   onMouseEnter={() => handleMouseEnter(item.text)}
                   onMouseLeave={handleMouseLeave}
                 >
-                  <p>
-                    <span className="mr-2 rounded-md border border-gray-400 p-1">
+                  <p className="flex items-center">
+                    <span className="text-grey-800 mr-2 flex h-[18px] w-[18px] items-center rounded-md border border-gray-400 p-1">
                       {index + 1}
                     </span>
                     {item.text}

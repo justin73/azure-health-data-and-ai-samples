@@ -36,7 +36,8 @@
     ".next/types/**/*.ts",
     "app/lib/placeholder-data.js",
     "scripts/seed.js",
-    "dist/types/**/*.ts"
+    "dist/types/**/*.ts",
+    "app/ui/imageViewer/imageViewer.js"
   ],
   "exclude": [
     "node_modules"
